@@ -1,0 +1,56 @@
+$backgroundColor: #fff7ec;
+$fontSize1: 1.7rem;
+$fontSize2: 1.5rem;
+$fontSize3: 1.3rem;
+$fontSize4: 0.9rem;
+$spacing: 8px;
+$spacingDouble: $spacing * 2;
+
+@mixin flex($direction, $justifyContent, $alignItems, $gap) {
+  & {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justifyContent;
+    align-items: $alignItems;
+    gap: $gap;
+  }
+}
+
+@mixin mq($breakpoint: 768px) {
+  & {
+    @media screen and (min-width: $breakpoint) {
+      @content;
+    }
+  }
+}
+
+@mixin colorAndWeight(
+  $font-weight: 300,
+  $font-sizeH1: $fontSize1,
+  $font-sizeH2: $fontSize2,
+  $font-sizeH3: $fontSize3
+) {
+  & {
+    font-weight: 300;
+
+    & h1 {
+      font-size: $font-sizeH1;
+    }
+
+    & h2 {
+      font-size: $font-sizeH2;
+      color: #374151;
+    }
+
+    & h3 {
+      font-size: $font-sizeH3;
+      color: #4b5563;
+    }
+
+    & em {
+      font-size: $fontSize4;
+      color: #4b5563;
+      font-style: italic;
+    }
+  }
+}

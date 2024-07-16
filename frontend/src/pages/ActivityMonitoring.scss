@@ -1,0 +1,43 @@
+@import "../style/style.scss";
+
+.monitoring-container {
+  @include colorAndWeight();
+  & {
+    padding: $spacing;
+  }
+  @include flex(column, center, center, $spacingDouble);
+
+  @include mq() {
+    padding: $spacingDouble;
+  }
+
+  header {
+    text-align: center;
+    padding: $spacingDouble;
+    line-height: 1.5;
+    position: sticky;
+    top: 0px;
+    backdrop-filter: blur(5px);
+    width: 100%;
+    @include flex(column, center, center, 0);
+
+    .selector-container {
+      @include flex(column, center, center, 0);
+      @include flex(row, center, center, $spacing);
+
+      select {
+        max-width: fit-content;
+      }
+    }
+  }
+
+  .chart-container {
+    @include flex(column, center, center, $spacing);
+
+    @include mq() {
+      width: 60%;
+      flex-wrap: wrap;
+      @include flex(row, center, center, $spacingDouble);
+    }
+  }
+}

@@ -1,0 +1,75 @@
+@use "./colors.scss" as *;
+
+$buttons: (
+  sm: (
+    padding: 0.5rem 1rem,
+    fontSize: 0.8rem,
+    borderRadius: 0.25rem,
+    gap: 0.5rem,
+  ),
+  md: (
+    padding: 0.75rem 1.5rem,
+    fontSize: 1rem,
+    borderRadius: 1.5rem,
+    gap: 0.75rem,
+  ),
+  lg: (
+    padding: 1rem 2rem,
+    fontSize: 1.25rem,
+    borderRadius: 1.75rem,
+    gap: 1rem,
+  ),
+);
+
+@mixin button($size, $color, $type: "fullfilled") {
+  $button-styles: map-get($buttons, $size);
+
+  padding: map-get($button-styles, padding);
+  font-size: map-get($button-styles, fontSize);
+  border-radius: map-get($button-styles, borderRadius);
+  gap: map-get($button-styles, gap);
+
+  @if $type == "fullfilled" {
+    background-color: var(--#{$color}-500);
+    color: var(--white-600);
+    font-family: "Roboto";
+    box-shadow: 0 1px 6px 0 #000000;
+    border: none;
+    margin: 1rem 0;
+
+    &:hover {
+      background-color: var(--#{$color}-100);
+      color: #000000;
+      cursor: pointer;
+      box-shadow: 0 1px 6px 0 #797979;
+    }
+
+    &:active {
+      box-shadow: none;
+    }
+  } @else if $type == "outlined" {
+    background-color: var(--#{$color}-100);
+    color: var(--#{$color}-600);
+    border: 1px solid var(--#{$color}-200);
+    font-family: "Judson";
+
+    &:hover {
+      cursor: pointer;
+      outline: 1px solid var(--#{$color}-900);
+    }
+  }
+}
+
+@each $size, $value in $buttons {
+  @each $color, $shades in $colors {
+    @each $type in ("fullfilled", "outlined") {
+      .button-#{"#{$size}"}-#{"#{$color}"}-#{"#{$type}"} {
+        @include button($size, $color, $type);
+      }
+
+      .button-#{"#{$size}"}-#{"#{$color}"} {
+        @include button($size, $color);
+      }
+    }
+  }
+}

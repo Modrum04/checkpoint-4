@@ -1,0 +1,33 @@
+@import "../style/style.scss";
+
+.reports-container {
+  padding: $spacing;
+  @include colorAndWeight();
+
+  @include mq() {
+    padding: $spacingDouble;
+  }
+  header {
+    text-align: center;
+    padding: $spacingDouble;
+    line-height: 1.5;
+    @include flex(column, center, center, 0);
+    a {
+      font-size: $fontSize2;
+    }
+    .selector-container {
+      @include flex(column, center, center, 0);
+      @include flex(row, center, center, $spacing);
+      select {
+        max-width: fit-content;
+      }
+    }
+  }
+  .reports-cards-container {
+    @include flex(column, center, center, $spacing);
+    @include mq() {
+      flex-wrap: wrap;
+      @include flex(row, center, center, $spacingDouble);
+    }
+  }
+}

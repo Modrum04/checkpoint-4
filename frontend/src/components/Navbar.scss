@@ -1,0 +1,25 @@
+@import "../style/style.scss";
+@import url("https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap");
+
+.navbar {
+  font-family: "Judson";
+  font-size: $fontSize1;
+  min-height: 10dvh;
+  width: 100dvw;
+  background-color: #d5dfd6;
+  box-shadow: 0px 1px 10px 0px #0000008a;
+  position: sticky;
+  @include flex(row, center, center, 1rem);
+  ul {
+    width: 100%;
+    @include flex(column, center, center, 1rem);
+    @include mq() {
+      @include flex(row, center, center, 2rem);
+    }
+
+    li:hover,
+    .active {
+      color: #fff7ec;
+    }
+  }
+}

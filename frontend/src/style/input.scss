@@ -1,0 +1,57 @@
+@use "./colors.scss" as *;
+
+$inputs: (
+  sm: (
+    padding: 0.5rem 1rem,
+    fontSize: 0.8rem,
+    borderRadius: 1.25rem,
+    gap: 0.5rem,
+  ),
+  md: (
+    padding: 0.75rem 1.5rem,
+    fontSize: 1rem,
+    borderRadius: 1.5rem,
+    gap: 0.75rem,
+  ),
+  lg: (
+    padding: 1rem 2rem,
+    fontSize: 1.25rem,
+    borderRadius: 1.75rem,
+    gap: 1rem,
+  ),
+);
+
+@mixin input($size, $color, $type: "outlined") {
+  $input-styles: map-get($inputs, $size);
+
+  padding: map-get($input-styles, padding);
+  font-size: map-get($input-styles, fontSize);
+  border-radius: map-get($input-styles, borderRadius);
+  gap: map-get($input-styles, gap);
+  background-color: var(--pumpkin-50);
+
+  width: 100%;
+  display: grid;
+  gap: 0.5rem;
+  font-family: "Roboto", sans-serif;
+  margin: 0.5rem 0;
+
+  @if $type == "outlined" {
+    color: var(--#{$color}-900);
+    border: 2px solid var(--#{$color}-200);
+  }
+}
+
+@each $size, $value in $inputs {
+  @each $color, $shades in $colors {
+    @each $type in ("fullfilled", "outlined") {
+      .input-#{"#{$size}"}-#{"#{$color}"}-#{"#{$type}"} {
+        @include input($size, $color, $type);
+      }
+
+      .input-#{"#{$size}"}-#{"#{$color}"} {
+        @include input($size, $color);
+      }
+    }
+  }
+}

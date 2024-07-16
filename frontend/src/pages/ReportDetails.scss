@@ -1,0 +1,43 @@
+@import "../style/style.scss";
+@import url("https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+.report-details-container {
+  @include flex(column, space-around, center, $spacing);
+  & {
+    padding-block: 2rem;
+    padding-inline: 1rem;
+  }
+  @include colorAndWeight();
+  .report-details {
+    @include mq() {
+      width: 50%;
+    }
+    @include flex(column, space-around, start, $spacingDouble);
+    h1 {
+      text-align: center;
+      width: 100%;
+    }
+    div {
+      width: 100%;
+      @include flex(column, space-around, start, $spacing);
+      @include mq() {
+        @include flex(column, space-around, start, $spacing);
+      }
+    }
+  }
+
+  .button-container {
+    @include flex(column, center, center, 8px);
+    @include mq() {
+      @include flex(row, center, center, 1rem);
+    }
+    form {
+      input {
+        &:hover {
+          background-color: red;
+        }
+      }
+    }
+  }
+}
