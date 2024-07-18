@@ -45,8 +45,9 @@ executer direcement dans le dossier avant de lancer l'application.
 
 ### Variables d environnement
 
-Seules deux variables d environnement sont utilisées :
+En back, seules deux variables d environnement sont utilisées :
 L uri de connexion à MongoDB et le port du server express.
+En front, seule l host Url est stocke en variable d environnement.
 
 ### Seeder
 
