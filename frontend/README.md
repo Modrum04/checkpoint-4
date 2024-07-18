@@ -17,29 +17,49 @@ l'indentation ainsi que pour la définition des variables css.
 Le back et le front doivent respectivement être lancés chacun avec NPM run dev.
 La base de données doit être simplement connectée; le back faisant le nécessaire lors du premier lancement
 
-## MongoDB Community
+### Principes
+
+Le programme n'est utilisable qu apres authentification.
+Il repose sur deux natures de role :
+
+- Sellers - Vendeur ayant emis un ou des comptes rendus pour des visites commerciales aupres de clients.
+  Les sellers peuvent creer, voir, exporter en pdf ainsi que modifier ou supprimer leurs rapports commerciaux.
+  Ils n ont acces qu a leurs propres et ne peuvent en creer que pour eux memes.
+- Admin - Administrateur ayant acces aux rapports ainsi qu a une interface de monitoring comptabilisant les ventes aupres des clients, et projettant les evolutions atendues en terme de chiffre d affaire et de volume de vente.
+
+### Connexion
+
+Tous les utilisateurs ont pour mot de passe !!Clorigay11
+Il existe un compte administrateur ayant pour :
+
+- identifiant : tristanlaroye@hotmail.com
+- mot de passe : !!Clorigay11
+
+## Technologies
+
+### MongoDB Community
 
 Coté Backend, MongoDB est exploité en server local MongoDb Community Server mais il est transposable à Atlas sans difficulté.
 Le peuplement de la base de données se fait a l'aide d'un script node seed.js à
 executer direcement dans le dossier avant de lancer l'application.
 
-## Variables d environnement
+### Variables d environnement
 
 Seules deux variables d environnement sont utilisées :
 L uri de connexion à MongoDB et le port du server express.
 
-## Seeder
+### Seeder
 
 Afin de rendre l'application plus dynamique; j'ai crée un fichier seed.js
 Il doit servir à peupler lq base de données.
 Le seeder s appuie sur faker pour générer des personnes et rapports fictifs.
 
-## CORS
+### CORS
 
 La configuration CORS est située dans le fichier setCorsConfiguration.middleware.
 Elle accepte les requetes exclusivement provenant de http://localhost:5173 pour correspondre à l'adresse par défaut sous viteJs.
 
-## Packages utilisés
+### Packages utilisés
 
 "chart.js": "^4.4.3",
 "dotenv": "^16.4.5",

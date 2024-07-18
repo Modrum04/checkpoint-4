@@ -34,7 +34,7 @@ function ConnectForm({ setIsConnected }) {
           <circle cx="20" cy="20" r="10" fill="red" />
         </svg>
       )}
-      <h2>{sessionStorage.token ? `Bienvenue ${sessionStorage?.sellerName}` : "Connection"}</h2>
+      <h2>{sessionStorage.token ? `Bienvenue ${sessionStorage?.sellerName}` : "Connexion"}</h2>
       {sessionStorage.token ? (
         <>
           <Link to="/reports">
