@@ -30,7 +30,7 @@ $buttons: (
   gap: map-get($button-styles, gap);
 
   @if $type == "fullfilled" {
-    background-color: var(--#{$color}-500);
+    background-color: var(--#{$color}-400);
     color: var(--white-600);
     font-family: "Roboto";
     box-shadow: 0 1px 6px 0 #000000;

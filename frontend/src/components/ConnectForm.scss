@@ -1,0 +1,27 @@
+@import "../style/style.scss";
+@import url("https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+.connect-container {
+  border: rgba(36, 51, 29, 0.1254901961) 2px solid;
+  border-radius: $spacing;
+  width: fit-content;
+  padding: $spacingDouble;
+
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff7ec;
+
+  form {
+    section {
+      font-size: 1rem;
+      @include flex(column, center, flex-start, $spacing);
+    }
+    @include flex(column, center, center, $spacing);
+  }
+  @include mq() {
+    min-width: 475px;
+  }
+  @include flex(column, center, center, $spacing);
+  @include colorAndWeight();
+}

@@ -8,8 +8,18 @@ import ActivityMonitoring from "./pages/ActivityMonitoring.jsx";
 import ReportForm, { addNewReport } from "./pages/ReportForm.jsx";
 import ReportDetails, { deleteReport } from "./pages/ReportDetails.jsx";
 import ReportEditForm, { updateReport } from "./pages/ReportEditForm.jsx";
+import { login } from "./components/ConnectForm.jsx";
+import Register, { postNewSeller } from "./pages/Register.jsx";
 
 const hostUrl = import.meta.env.VITE_API_URL;
+
+const requestHeader = {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${sessionStorage.token}`,
+  },
+};
 
 const router = createBrowserRouter([
   {
@@ -19,23 +29,25 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <App />,
+        action: login,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+        action: postNewSeller,
       },
       {
         path: "/reports",
         element: <Reports />,
-        loader: () =>
-          fetch(`${hostUrl}/api/reports`)
-            .then((response) => response.json())
-            .then((data) => data),
       },
       {
         path: "report-form",
         element: <ReportForm />,
         loader: async () => {
-          const clientsPromise = fetch(`${hostUrl}/api/clients`).then((response) =>
+          const clientsPromise = fetch(`${hostUrl}/api/clients`, requestHeader).then((response) =>
             response.json(),
           );
-          const sellersPromise = fetch(`${hostUrl}/api/sellers`).then((response) =>
+          const sellersPromise = fetch(`${hostUrl}/api/sellers`, requestHeader).then((response) =>
             response.json(),
           );
           const [clients, sellers] = await Promise.all([clientsPromise, sellersPromise]);
@@ -47,7 +59,7 @@ const router = createBrowserRouter([
         path: "report-edit-form/:id",
         element: <ReportEditForm />,
         loader: ({ params }) =>
-          fetch(`${hostUrl}/api/reports/${params.id}`)
+          fetch(`${hostUrl}/api/reports/${params.id}`, requestHeader)
             .then((response) => response.json())
             .then((data) => data),
         action: updateReport,
@@ -56,7 +68,7 @@ const router = createBrowserRouter([
         path: "/activity-monitoring",
         element: <ActivityMonitoring />,
         loader: () =>
-          fetch(`${hostUrl}/api/reports`)
+          fetch(`${hostUrl}/api/reports`, requestHeader)
             .then((response) => response.json())
             .then((data) => data),
       },
@@ -64,7 +76,7 @@ const router = createBrowserRouter([
         path: "/reports/:id",
         element: <ReportDetails />,
         loader: async ({ params }) =>
-          fetch(`${hostUrl}/api/reports/${params.id}`)
+          fetch(`${hostUrl}/api/reports/${params.id}`, requestHeader)
             .then((response) => response.json())
             .then((data) => data),
         action: deleteReport,

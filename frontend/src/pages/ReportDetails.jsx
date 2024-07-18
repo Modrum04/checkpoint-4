@@ -7,9 +7,15 @@ import Modal from "../components/Modal";
 import { usePDF } from "react-to-pdf";
 
 const hostUrl = import.meta.env.VITE_API_URL;
-
+const requestHeader = {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${sessionStorage.token}`,
+  },
+};
 const fetchExternalsDetails = (endpoint, id, setter) => {
-  fetch(`${hostUrl}/api/${endpoint}/${id}`)
+  fetch(`${hostUrl}/api/${endpoint}/${id}`, requestHeader)
     .then((response) => response.json())
     .then((data) => setter(data));
 };
@@ -85,12 +91,12 @@ function ReportDetails() {
             <p>n° salarié : {sellerDetails._id}</p>
           </div>
         </div>
-        <button className="button-lg-olive-fullfilled" onClick={() => toPDF()}>
+        <button className="button-lg-indigo-fullfilled" onClick={() => toPDF()}>
           Télécharger le pdf
         </button>
         <div className="button-container">
           <Link to={`/report-edit-form/${_id}`}>
-            <button className="button-lg-olive-fullfilled">Modifier</button>
+            <button className="button-lg-indigo-fullfilled">Modifier</button>
           </Link>
           <Form method="delete">
             <input
@@ -98,7 +104,7 @@ function ReportDetails() {
               type="submit"
               name="submit"
               value="Suppprimer"
-              className="button-lg-olive-fullfilled"
+              className="button-lg-indigo-fullfilled"
             />
           </Form>
         </div>
@@ -115,6 +121,7 @@ export const deleteReport = async ({ request, params }) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.token}`,
       },
     });
 

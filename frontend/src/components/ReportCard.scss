@@ -1,15 +1,16 @@
 @import "../style/style.scss";
 
 .report-card-container {
-  border: rgba(36, 51, 29, 0.1254901961) 2px solid;
-  background-color: #fdf7ef;
+  border: #c7d2fe 2px solid;
+  background-color: #fff7ec;
   border-radius: $spacing;
-  width: fit-content;
   padding: $spacingDouble;
-  min-width: 475px;
+  width: 100%;
   @include colorAndWeight();
   @include flex(column, start, start, 4px);
   @include mq() {
+    width: fit-content;
+    min-width: 525px;
     @include flex(column, start, start, 8px);
   }
   button {

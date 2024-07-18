@@ -11,15 +11,24 @@
     text-align: center;
     padding: $spacingDouble;
     line-height: 1.5;
+
     @include flex(column, center, center, 0);
     a {
       font-size: $fontSize2;
     }
     .selector-container {
       @include flex(column, center, center, 0);
-      @include flex(row, center, center, $spacing);
+      @include mq() {
+        @include flex(row, center, center, $spacing);
+      }
       select {
         max-width: fit-content;
+      }
+    }
+    h2 {
+      font-size: $fontSize2 * 0.6;
+      @include mq() {
+        font-size: $fontSize2;
       }
     }
   }

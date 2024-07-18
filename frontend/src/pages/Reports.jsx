@@ -13,8 +13,8 @@ function Reports() {
   const [order, setOrder] = useState("asc");
 
   const { fetchedData: fetchedReports } = fetchData("reports", {
-    filterBy: filterBy,
-    filterValue: filterValue,
+    filterBy: sessionStorage.isAdmin === "true" ? filterBy : "seller.id",
+    filterValue: sessionStorage.isAdmin === "true" ? filterValue : sessionStorage.sellerId,
     sortBy: sortBy,
     order: order,
   });
@@ -43,60 +43,84 @@ function Reports() {
         return false;
     }
   };
+
   return (
     <div className="reports-container">
-      <header>
-        <h1>Liste des comptes rendus</h1>
-        <Link to="/report-form">
-          <button className="button-sm-olive-fullfilled">Saisir un nouveau rapport</button>
-        </Link>
-        <p>Nombre total : {fetchedReports.length}</p>
-        <div className="selector-container">
-          <h2>Filtrer par</h2>
-          <DropdownSelector
-            selected={filterBy}
-            setSelected={setFilterBy}
-            dropdownDatasList={[
-              { _id: "seller.id", name: "Agent" },
-              { _id: "client.id", name: "Client" },
-              { _id: "visitDate", name: "Date de visite" },
-            ]}
-          />
-          {getListOfSellersOrClientsOrVisit(filterBy) && (
-            <DropdownSelector
-              selected={filterValue}
-              setSelected={setFilterValue}
-              dropdownDatasList={getListOfSellersOrClientsOrVisit(filterBy)}
-            />
-          )}
-        </div>
-        <div className="selector-container">
-          <h2>Trier par</h2>
-          <DropdownSelector
-            selected={sortBy}
-            setSelected={setSortBy}
-            dropdownDatasList={[
-              { _id: "seller.name", name: "Agent" },
-              { _id: "client.name", name: "Client" },
-              { _id: "visitDate", name: "Date de visite" },
-            ]}
-          />
-          <h2>Sens du tri</h2>
-          <DropdownSelector
-            selected={order}
-            setSelected={setOrder}
-            dropdownDatasList={[
-              { _id: "asc", name: "Ascendant" },
-              { _id: "dsc", name: "Descendant" },
-            ]}
-          />
-        </div>
-      </header>
+      {sessionStorage.token ? (
+        <>
+          <header>
+            <h1>Liste des comptes rendus</h1>
+            <Link to="/report-form">
+              <button className="button-sm-indigo-fullfilled">Saisir un nouveau rapport</button>
+            </Link>
+            <p>Nombre total : {fetchedReports.length}</p>
+            <div className="selector-container">
+              {sessionStorage.isAdmin === "true" ? (
+                <>
+                  <h2>Filtrer par</h2>
+                  <DropdownSelector
+                    selected={filterBy}
+                    setSelected={setFilterBy}
+                    dropdownDatasList={[
+                      { _id: "seller.id", name: "Agent" },
+                      { _id: "client.id", name: "Client" },
+                      { _id: "visitDate", name: "Date de visite" },
+                    ]}
+                  />
+                  {getListOfSellersOrClientsOrVisit(filterBy) && (
+                    <DropdownSelector
+                      selected={filterValue}
+                      setSelected={setFilterValue}
+                      dropdownDatasList={getListOfSellersOrClientsOrVisit(filterBy)}
+                    />
+                  )}
+                </>
+              ) : (
+                <>
+                  <h2>Rapports de {sessionStorage.sellerName}</h2>
+                </>
+              )}
+            </div>
+            <div className="selector-container">
+              <h2>Trier par</h2>
+              <DropdownSelector
+                selected={sortBy}
+                setSelected={setSortBy}
+                dropdownDatasList={
+                  sessionStorage.isAdmin === "true"
+                    ? [
+                        { _id: "seller.name", name: "Agent" },
+                        { _id: "client.name", name: "Client" },
+                        { _id: "visitDate", name: "Date de visite" },
+                      ]
+                    : [
+                        { _id: "client.name", name: "Client" },
+                        { _id: "visitDate", name: "Date de visite" },
+                      ]
+                }
+              />
+              <h2>Sens du tri</h2>
+              <DropdownSelector
+                selected={order}
+                setSelected={setOrder}
+                dropdownDatasList={[
+                  { _id: "asc", name: "Ascendant" },
+                  { _id: "dsc", name: "Descendant" },
+                ]}
+              />
+            </div>
+          </header>
 
-      <div className="reports-cards-container">
-        {fetchedReports.length &&
-          fetchedReports.map((report) => <ReportCard data={report} key={report._id} />)}
-      </div>
+          <div className="reports-cards-container">
+            {fetchedReports.length &&
+              fetchedReports.map((report) => <ReportCard data={report} key={report._id} />)}
+          </div>
+        </>
+      ) : (
+        <h1 style={{ textAlign: "center" }}>
+          Connectez-vous pour accéder à la liste des comptes rendus
+        </h1>
+      )}
     </div>
   );
 }

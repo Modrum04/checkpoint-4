@@ -8,15 +8,15 @@ const {
   deleteOneReport,
   modifyOneReport,
 } = require("../../controllers/reportAction");
+const verifyToken = require("../../services/verifyToken.middleware");
 
 router.get("/", sort, getAllReports);
+router.get("/:id", verifyToken, getOneReport);
 
-router.get("/:id", getOneReport);
+router.post("/", verifyToken, createReport);
 
-router.post("/", createReport);
+router.put("/:id", verifyToken, modifyOneReport);
 
-router.put("/:id", modifyOneReport);
-
-router.delete("/:id", deleteOneReport);
+router.delete("/:id", verifyToken, deleteOneReport);
 
 module.exports = router;

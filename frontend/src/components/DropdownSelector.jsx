@@ -5,7 +5,7 @@ function DropdownSelector({ selected, setSelected, dropdownDatasList, name, disa
   return (
     <div>
       <select
-        className={`${disabled ? "input-sm-gray-fullfilled" : "input-sm-gray-outlined"}`}
+        className={`${disabled ? "input-sm-indigo-fullfilled" : "input-sm-indigo-outlined"}`}
         id={name}
         name={name}
         value={selected}

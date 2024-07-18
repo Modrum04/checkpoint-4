@@ -53,7 +53,7 @@ function ReportEditForm() {
               id="visit-date"
               name="visit-date"
               type="date"
-              className="input-sm-gray-outlined"
+              className="input-sm-indigo-outlined"
               required
               defaultValue={data.visitDate.split("T")[0]}
             />
@@ -67,7 +67,7 @@ function ReportEditForm() {
                 placeholder="nombre d'unités"
                 name="articles-ordered"
                 type="number"
-                className="input-sm-gray-outlined"
+                className="input-sm-indigo-outlined"
                 required
                 defaultValue={data.orderDetails.articlesOrdered}
               />
@@ -81,7 +81,7 @@ function ReportEditForm() {
                 name="generated-revenue"
                 type="number"
                 step="0.01"
-                className="input-sm-gray-outlined"
+                className="input-sm-indigo-outlined"
                 required
                 defaultValue={data.orderDetails.revenueGenerated}
               />
@@ -100,7 +100,7 @@ function ReportEditForm() {
               id="next-visit-date"
               name="next-visit-date"
               type="date"
-              className="input-sm-gray-outlined"
+              className="input-sm-indigo-outlined"
               required
               defaultValue={data.nextVisit.expectedDate.split("T")[0]}
             />
@@ -114,7 +114,7 @@ function ReportEditForm() {
                 placeholder="nombre d'unités"
                 name="expected-ordered"
                 type="number"
-                className="input-sm-gray-outlined"
+                className="input-sm-indigo-outlined"
                 required
                 defaultValue={data.nextVisit.expectedArticles}
               />
@@ -128,7 +128,7 @@ function ReportEditForm() {
                 name="expected-revenue"
                 type="number"
                 step="0.01"
-                className="input-sm-gray-outlined"
+                className="input-sm-indigo-outlined"
                 required
                 defaultValue={data.nextVisit.expectedRevenue}
               />
@@ -140,7 +140,7 @@ function ReportEditForm() {
             type="submit"
             name="submit"
             value="Envoyer"
-            className="button-lg-olive-fullfilled"
+            className="button-lg-indigo-fullfilled"
           />
         </Form>
       </div>
@@ -185,6 +185,7 @@ export async function updateReport({ request, params }) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.token}`,
       },
       body: JSON.stringify(requestBody),
     });

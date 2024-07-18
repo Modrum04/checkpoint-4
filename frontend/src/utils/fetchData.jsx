@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 const hostUrl = import.meta.env.VITE_API_URL;
-
+const requestHeader = {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${sessionStorage.token}`,
+  },
+};
 const queryList = {
   reports: {
     endPoint: "reports?",
@@ -13,9 +19,11 @@ const queryList = {
   },
   clients: {
     endPoint: "clients/",
+    defaultQueryOptions: {},
   },
   sellers: {
     endPoint: "sellers/",
+    defaultQueryOptions: {},
   },
 };
 
@@ -39,7 +47,7 @@ export function fetchData(selectedEndpoint, queryOptions = {}) {
 
   useEffect(() => {
     try {
-      fetch(`${hostUrl}/api/${queryString()}`)
+      fetch(`${hostUrl}/api/${queryString()}`, requestHeader)
         .then((response) => response.json())
         .then((data) => {
           setfetchedData(data);

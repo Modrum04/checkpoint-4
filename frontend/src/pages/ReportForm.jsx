@@ -8,10 +8,14 @@ import DropdownSelector from "../components/DropdownSelector";
 
 const hostUrl = import.meta.env.VITE_API_URL;
 
+const requestHeader = {
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${sessionStorage.token}`,
+};
+
 function ReportForm() {
-  const [selectedSeller, setSelectedSeller] = useState("");
   const [selectedClient, setSelectedClient] = useState("");
-  const { clients, sellers } = useLoaderData();
+  const { clients } = useLoaderData();
 
   const actionResponse = useActionData();
 
@@ -23,14 +27,15 @@ function ReportForm() {
           <section className="parties">
             <div>
               <label htmlFor="seller-name">Agent</label>
-              <DropdownSelector
-                selected={selectedSeller}
-                setSelected={setSelectedSeller}
-                dropdownDatasList={sellers}
-                name={"seller-name"}
+              <input
+                className="input-sm-indigo-outlined"
+                name="seller-name"
+                id="seller-name"
+                value={sessionStorage.sellerName}
+                disabled
               />
-              <p>Requis</p>
-              <em>n° salarié : {selectedSeller}</em>
+
+              <em>n° salarié : {sessionStorage.sellerId}</em>
             </div>
             <div>
               <label htmlFor="client-name">Client</label>
@@ -50,7 +55,7 @@ function ReportForm() {
               id="visit-date"
               name="visit-date"
               type="date"
-              className="input-sm-gray-outlined"
+              className="input-sm-indigo-outlined"
               required
             />
             <p>Requis</p>
@@ -63,7 +68,7 @@ function ReportForm() {
                 placeholder="nombre d'unités"
                 name="articles-ordered"
                 type="number"
-                className="input-sm-gray-outlined"
+                className="input-sm-indigo-outlined"
                 required
               />
               <p>Requis</p>
@@ -76,7 +81,7 @@ function ReportForm() {
                 name="generated-revenue"
                 type="number"
                 step="0.01"
-                className="input-sm-gray-outlined"
+                className="input-sm-indigo-outlined"
                 required
               />
               <p>Requis</p>
@@ -84,7 +89,12 @@ function ReportForm() {
           </section>
           <section>
             <h3>Synthèse</h3>
-            <textarea required id="report-text" name="report-text" />
+            <textarea
+              className="input-sm-indigo-outlined"
+              required
+              id="report-text"
+              name="report-text"
+            />
             <p>Requis</p>
           </section>
           <h2>Prévisionnel</h2>
@@ -94,7 +104,7 @@ function ReportForm() {
               id="next-visit-date"
               name="next-visit-date"
               type="date"
-              className="input-sm-gray-outlined"
+              className="input-sm-indigo-outlined"
               required
             />
             <p>Requis</p>
@@ -107,7 +117,7 @@ function ReportForm() {
                 placeholder="nombre d'unités"
                 name="expected-ordered"
                 type="number"
-                className="input-sm-gray-outlined"
+                className="input-sm-indigo-outlined"
                 required
               />
               <p>Requis</p>
@@ -120,7 +130,7 @@ function ReportForm() {
                 name="expected-revenue"
                 type="number"
                 step="0.01"
-                className="input-sm-gray-outlined"
+                className="input-sm-indigo-outlined"
                 required
               />
               <p>Requis</p>
@@ -131,7 +141,7 @@ function ReportForm() {
             type="submit"
             name="submit"
             value="Envoyer"
-            className="button-lg-olive-fullfilled"
+            className="button-lg-indigo-fullfilled"
           />
         </Form>
       </div>
@@ -150,7 +160,8 @@ function ReportForm() {
 export async function addNewReport({ request }) {
   const formData = await request.formData();
 
-  const seller = formData.get("seller-name");
+  const seller = sessionStorage.sellerId;
+  console.log(seller);
   const client = formData.get("client-name");
   const reportText = formData.get("report-text");
 
@@ -173,9 +184,7 @@ export async function addNewReport({ request }) {
   try {
     const response = await fetch(`${hostUrl}/api/reports`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: requestHeader,
       body: JSON.stringify(requestBody),
     });
     const responseBody = await response.json();

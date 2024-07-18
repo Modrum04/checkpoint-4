@@ -3,9 +3,10 @@ const express = require("express");
 const router = express.Router();
 
 const { getOneClient, getAllClients } = require("../../controllers/clientAction");
+const verifyToken = require("../../services/verifyToken.middleware");
 
-router.get("/", getAllClients);
+router.get("/", verifyToken, getAllClients);
 
-router.get("/:id", getOneClient);
+router.get("/:id", verifyToken, getOneClient);
 
 module.exports = router;

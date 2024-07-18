@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { faker } = require("@faker-js/faker");
+const argon2 = require("argon2");
 require("dotenv").config();
 
 const Seller = require("./models/Seller");
@@ -25,12 +26,34 @@ const seedDatabase = async () => {
     await Client.deleteMany({});
     await Report.deleteMany({});
 
+    ///Creation du compte admin/////////////////////////////////////////////
+    const hashingOptions = {
+      type: argon2.argon2id,
+      memoryCost: 19 * 2 ** 10,
+      timeCost: 2,
+      parallelism: 1,
+    };
+
+    const hash = await argon2.hash("!!Clorigay11", hashingOptions);
+    const admin = new Seller({
+      name: "Tristan",
+      email: "tristanlaroye@hotmail.com",
+      phone: "0612345678",
+      password: hash,
+      isAdmin: true,
+    });
+    await admin.save();
+
+    /////////////////////////////////////////////////////////////////////////
+
     const sellers = [];
     for (let i = 0; i < 5; i++) {
       const seller = new Seller({
         name: faker.name.fullName(),
         email: faker.internet.email(),
         phone: faker.phone.number(),
+        password: hash,
+        isAdmin: false,
       });
       sellers.push(seller);
       await seller.save();

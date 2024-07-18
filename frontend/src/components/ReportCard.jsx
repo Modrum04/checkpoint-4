@@ -11,7 +11,7 @@ function ReportCard({ data }) {
       <p>CA réalisé : {data.orderDetails.revenueGenerated} € HT</p>
       <p>Volume commandé : {data.orderDetails.articlesOrdered} unités</p>
       <Link to={`${data._id}`}>
-        <button className="button-md-olive-fullfilled">voir les détails du compte rendu</button>
+        <button className="button-md-indigo-fullfilled">voir les détails du compte rendu</button>
       </Link>
     </div>
   );
