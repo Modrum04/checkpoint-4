@@ -2,7 +2,7 @@
 
 ## Démarche
 
-Le projet étant un checkpoint; j'ai utilisé plusieurs approches pour des problématiques
+Le projet étant un checkpoint, j'ai utilisé plusieurs approches pour des problématiques
 similaires. Pour accéder à certaines données de l'API j'ai notamment utilisé
 React-router-dom sur les pages lorsque la données devait être immediatement accessible.
 

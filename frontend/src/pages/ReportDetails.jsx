@@ -7,15 +7,20 @@ import Modal from "../components/Modal";
 import { usePDF } from "react-to-pdf";
 
 const hostUrl = import.meta.env.VITE_API_URL;
-const requestHeader = {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${sessionStorage.token}`,
-  },
+
+const requestHeader = () => {
+  const token = sessionStorage.getItem("token");
+  return {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
+
 const fetchExternalsDetails = (endpoint, id, setter) => {
-  fetch(`${hostUrl}/api/${endpoint}/${id}`, requestHeader)
+  fetch(`${hostUrl}/api/${endpoint}/${id}`, requestHeader())
     .then((response) => response.json())
     .then((data) => setter(data));
 };
@@ -117,11 +122,12 @@ export default ReportDetails;
 
 export const deleteReport = async ({ request, params }) => {
   try {
+    const token = sessionStorage.getItem("token");
     const response = await fetch(`${hostUrl}/api/reports/${params.id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 

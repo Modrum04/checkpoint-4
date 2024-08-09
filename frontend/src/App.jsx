@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "./App.scss";
 import "./reset.scss";
 import ConnectForm from "./components/ConnectForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [isConnected, setIsConnected] = useState(sessionStorage.connected);

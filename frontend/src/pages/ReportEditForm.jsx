@@ -181,11 +181,12 @@ export async function updateReport({ request, params }) {
     nextVisit: { expectedDate, expectedArticles, expectedRevenue },
   };
   try {
+    const token = sessionStorage.getItem("token");
     const response = await fetch(`${hostUrl}/api/reports/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(requestBody),
     });

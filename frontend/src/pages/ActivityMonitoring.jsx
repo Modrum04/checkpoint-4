@@ -11,7 +11,6 @@ function ActivityMonitoring() {
   const [displayGlobalChart, setDisplayGlobalChart] = useState(true);
   const [displayDetailsChart, setDisplayDetailsChart] = useState(true);
   const reports = useLoaderData();
-
   const [filterBy, setFilterBy] = useState("");
   const [filterValue, setFilterValue] = useState("");
 

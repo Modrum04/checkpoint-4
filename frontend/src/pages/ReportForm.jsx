@@ -8,9 +8,12 @@ import DropdownSelector from "../components/DropdownSelector";
 
 const hostUrl = import.meta.env.VITE_API_URL;
 
-const requestHeader = {
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${sessionStorage.token}`,
+const requestHeader = () => {
+  const token = sessionStorage.getItem("token");
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
 };
 
 function ReportForm() {
@@ -161,7 +164,6 @@ export async function addNewReport({ request }) {
   const formData = await request.formData();
 
   const seller = sessionStorage.sellerId;
-  console.log(seller);
   const client = formData.get("client-name");
   const reportText = formData.get("report-text");
 
@@ -184,7 +186,7 @@ export async function addNewReport({ request }) {
   try {
     const response = await fetch(`${hostUrl}/api/reports`, {
       method: "POST",
-      headers: requestHeader,
+      headers: requestHeader(),
       body: JSON.stringify(requestBody),
     });
     const responseBody = await response.json();

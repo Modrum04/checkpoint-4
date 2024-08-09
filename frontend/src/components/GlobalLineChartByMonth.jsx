@@ -58,8 +58,6 @@ const GlobalLineChartByMonth = ({ data }) => {
   const arrayWithAgregateSalesForecastCycle = Object.values(
     aggregateTotalSalesByMonth(data, "forecast"),
   );
-  console.log(arrayWithAgregateSalesCurrentCycle);
-
   const chartData = {
     labels: arrayWithAgregateSalesCurrentCycle.map((el) => el.month),
 

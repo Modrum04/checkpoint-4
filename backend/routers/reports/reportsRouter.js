@@ -1,7 +1,7 @@
 const express = require("express");
 
 const router = express.Router();
-const sort = require("../../services/formatQuery.middleware");
+const formatForSortAndFilter = require("../../services/formatQuery.middleware");
 const {
   getAllReports,
   getOneReport,
@@ -10,7 +10,8 @@ const {
 } = require("../../controllers/reportAction");
 const verifyToken = require("../../services/verifyToken.middleware");
 
-router.get("/", sort, getAllReports);
+router.get("/", verifyToken, formatForSortAndFilter, getAllReports);
+
 router.get("/:id", verifyToken, getOneReport);
 
 router.post("/", verifyToken, createReport);
